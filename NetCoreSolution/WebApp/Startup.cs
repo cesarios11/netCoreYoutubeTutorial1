@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Models;
 
 namespace WebApp
 {
@@ -25,7 +26,22 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options => options.EnableEndpointRouting = false);
-            //services.AddMvcCore();
+            //services.AddMvcCore(options => options.EnableEndpointRouting = false);
+
+            
+            //Crea un servicio singleton cuando se solicita por primera vez y esta es la misma instancia que 
+            //es utilizada por todas las solicitudes posteriores.
+            services.AddSingleton<IAmigoAlmacen, MockAmigoRepositorio>();
+
+            /*
+            //Se crea un servicio transitorio. Crea una instancia de un servicio transitorio, cada vez que se solicita.
+            //Cada peticion crearía un nuevo objeto
+            services.AddTransient<IAmigoAlmacen, MockAmigoRepositorio>();
+
+            //Crea una nueva instancia durante el ámbito de ejecución. Durante el tiempo que dure la petición.
+            services.AddScoped<IAmigoAlmacen, MockAmigoRepositorio>();
+            */
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +61,7 @@ namespace WebApp
 
             /*
             app.UseDefaultFiles();
-            app.UseStaticFiles();
+            app.UseStaticFiles();   
             */
 
             app.UseStaticFiles();
