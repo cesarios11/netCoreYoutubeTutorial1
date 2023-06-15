@@ -64,9 +64,22 @@ namespace WebApp
             app.UseStaticFiles();   
             */
 
+            //TODO: Middleware que permite carar los archivos estáticos: imagenes, js, css etc
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
 
+            //TODO: Usa por defecto el enrutamiento de las aplicaciones asp.net core
+            //app.UseMvcWithDefaultRoute();
+
+            //TODO:Define un enrutamiento personalizado
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            //});
+
+            //TODO: Este enrutamiento obliga a definir la etiqueta '[Route("Home/Details5/{id?}")]' para cada 
+            //método del controlador.
+            //Si solo se usa app.UseMvcWithDefaultRoute(); entonces estas etiquetas no son necesarias
+            app.UseMvc();
             
             app.Use(async(context, next) => {
                 await context.Response.WriteAsync($"Entorno: {env.EnvironmentName}");
