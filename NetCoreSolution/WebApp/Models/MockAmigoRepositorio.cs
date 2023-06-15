@@ -18,5 +18,10 @@ namespace WebApp.Models
         {
             return this.amigosLista.FirstOrDefault(e => e.Id == id);
         }
+
+        public List<Amigo> dameTodosLosAmigos()
+        {
+            return amigosLista;
+        }
     }
 }

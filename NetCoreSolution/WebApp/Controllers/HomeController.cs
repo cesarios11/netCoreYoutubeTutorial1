@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
+using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
@@ -11,9 +12,26 @@ namespace WebApp.Controllers
             _amigoAlmacen = amigoAlmacen;
         }
 
-        public string Index()
+        public string Index1()
         {
             return _amigoAlmacen.dameDatosAmigo(1).Email;
+        }
+
+        public JsonResult Index2()
+        {
+            return Json(new { id = 2, nombre = "Cesar" });
+        }
+
+        public ViewResult Index3()
+        {
+            Amigo modelo = _amigoAlmacen.dameDatosAmigo(3);
+            return View("~/MisVistas/Index.cshtml");
+        }
+
+        public ViewResult Index4()
+        {
+            var modelo = _amigoAlmacen.dameTodosLosAmigos();
+            return View(modelo);
         }
 
         public JsonResult Details1()
@@ -39,20 +57,22 @@ namespace WebApp.Controllers
             ViewBag.Titulo = "Lista amigos ViewBag";
             ViewBag.Amigo2 = modelo2;
 
+            //Utilizando un modelo fuertemente tipado.
             Amigo modelo3 = _amigoAlmacen.dameDatosAmigo(3);
             return View(modelo3);
         }
 
-        public JsonResult Index2()
+        public ViewResult Details4()
         {
-            return Json(new { id=2, nombre = "Cesar"});
+            DetallesView detalles = new DetallesView();
+            detalles.Titulo = "Lista Amigos View Models";
+            detalles.Subtitulo = "Mis detalles";
+            detalles.Amigo = _amigoAlmacen.dameDatosAmigo(3);
+
+            return View(detalles);
         }
 
-        public ViewResult Index3()
-        {
-            Amigo modelo = _amigoAlmacen.dameDatosAmigo(3);
-            return View("~/MisVistas/Index.cshtml");
-        }
+        
 
     }
 }
