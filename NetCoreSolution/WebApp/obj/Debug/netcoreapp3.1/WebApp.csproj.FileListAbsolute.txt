@@ -62,3 +62,5 @@ C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Details4.cshtml.g.cs
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index4.cshtml.g.cs
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
