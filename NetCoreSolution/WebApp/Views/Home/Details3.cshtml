@@ -1,31 +1,29 @@
 ﻿@model WebApp.Models.Amigo
-<html>
-<head>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Details 3";
+}
 
-</head>
-<body>
-    <h2>@ViewData["cabecera"]</h2>
-    @{
-        var _modelo = ViewData["amigo1"] as WebApp.Models.Amigo;
-    }
-    <div>
-        <label>Nombre: </label><label>@_modelo.Nombre</label><br />
-        <label>Email: </label><label>@_modelo.Email</label><br />
-        <label>Ciudad: </label><label>@_modelo.Ciudad</label><br />
-    </div>
-    <br />
-    <h2>@ViewBag.Titulo</h2>    
-    <div>
-        <label>Nombre: </label><label>@ViewBag.Amigo2.Nombre</label><br />
-        <label>Email: </label><label>@ViewBag.Amigo2.Email</label><br />
-        <label>Ciudad: </label><label>@ViewBag.Amigo2.Ciudad</label><br />
-    </div>
-    <br />
-    <h2>Fuertemente tipado</h2>
-    <div>
-        <label>Nombre: </label><label>@Model.Nombre</label><br />
-        <label>Email: </label><label>@Model.Email</label><br />
-        <label>Ciudad: </label><label>@Model.Ciudad</label><br />
-    </div>
-</body>
-</html>
+<h2>@ViewData["cabecera"]</h2>
+@{
+    var _modelo = ViewData["amigo1"] as WebApp.Models.Amigo;
+}
+<div>
+    <label>Nombre: </label><label>@_modelo.Nombre</label><br />
+    <label>Email: </label><label>@_modelo.Email</label><br />
+    <label>Ciudad: </label><label>@_modelo.Ciudad</label><br />
+</div>
+<br />
+<h2>@ViewBag.Titulo</h2>    
+<div>
+    <label>Nombre: </label><label>@ViewBag.Amigo2.Nombre</label><br />
+    <label>Email: </label><label>@ViewBag.Amigo2.Email</label><br />
+    <label>Ciudad: </label><label>@ViewBag.Amigo2.Ciudad</label><br />
+</div>
+<br />
+<h2>Fuertemente tipado</h2>
+<div>
+    <label>Nombre: </label><label>@Model.Nombre</label><br />
+    <label>Email: </label><label>@Model.Email</label><br />
+    <label>Ciudad: </label><label>@Model.Ciudad</label><br />
+</div>

@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    @*TODO:
+        En esta vista (vista de diseño '_Layout.cshtml') permite definir que la seccion de scripts 
+        no sea obligatorio en todas las páginas
+        En 'Home/Details4.cshtml' se está definiendo esta seccion, pero en otras páginas no se define.
+    *@
+    @RenderSection("Scripts", required:false)
+</body>
+</html>

@@ -48,22 +48,23 @@ namespace WebApp.Controllers
 
         public ViewResult Details3()
         {
+            //TODO:Con viewData usamos claves de texto.
             Amigo modelo1 = _amigoAlmacen.dameDatosAmigo(1);
             ViewData["cabecera"] = "Lista Amigos ViewData";
             ViewData["amigo1"] = modelo1;
 
-            //Con viewbag usamos propiedades dinámicas y no claves de cadena
+            //TODO:Con viewbag usamos propiedades dinámicas y no claves de cadena
             Amigo modelo2 = _amigoAlmacen.dameDatosAmigo(2);
             ViewBag.Titulo = "Lista amigos ViewBag";
             ViewBag.Amigo2 = modelo2;
 
-            //Utilizando un modelo fuertemente tipado.
+            //TODO:Utilizando un modelo fuertemente tipado.
             Amigo modelo3 = _amigoAlmacen.dameDatosAmigo(3);
             return View(modelo3);
         }
 
         public ViewResult Details4()
-        {
+        {            
             DetallesView detalles = new DetallesView();
             detalles.Titulo = "Lista Amigos View Models";
             detalles.Subtitulo = "Mis detalles";
@@ -71,8 +72,5 @@ namespace WebApp.Controllers
 
             return View(detalles);
         }
-
-        
-
     }
 }

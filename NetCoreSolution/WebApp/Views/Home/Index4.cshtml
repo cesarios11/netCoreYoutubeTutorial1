@@ -1,24 +1,20 @@
 ﻿@model List<WebApp.Models.Amigo>
-
-<html>
-<head>
-
-</head>
-<body>
-    <table>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Amigos indice";
+}
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Ciudad</th>
+    </tr>        
+    @foreach (var amigo in Model)
+    {
         <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Ciudad</th>
-        </tr>        
-        @foreach (var amigo in Model)
-        {
-            <tr>
-                <td>@amigo.Nombre</td>
-                <td>@amigo.Email</td>
-                <td>@amigo.Ciudad</td>
-            </tr>            
-        }        
-    </table>
-</body>
-</html>
+            <td>@amigo.Nombre</td>
+            <td>@amigo.Email</td>
+            <td>@amigo.Ciudad</td>
+        </tr>            
+    }        
+</table>
