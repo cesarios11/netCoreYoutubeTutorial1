@@ -4,18 +4,60 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="~/css/sitio.css" rel="stylesheet" />
-    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+    @*TODO:
+            *Si el entorno es el de desarrollo, entonces cargue el archivo 'bootstrap.css localmente 
+            desde la ubicación especificada.
+            Si el entonrno NO es de desarrollo 'exclude="Development"' entonces cargue el archivo desde la url especificada.
+            La lógica valida que si el cdn de boostrap no está disponible, entonces carga el archivo local
+    *@
+    <environment include="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link   rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+                integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+                crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute"
+              asp-suppress-fallback-integrity="true">
+    </environment>
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div>
-        @RenderBody()
-    </div>
-    @*TODO:
-        En esta vista (vista de diseño '_Layout.cshtml') permite definir que la seccion de scripts 
+    <div class="container">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index4">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWLzNdPnnd0Srhg6EnUvnerdxZqgn3HczUiNLPdX-LcpxokHKXc-Z7dpo_DAxiR0ZPNmE&usqp=CAU" width="30" height="30"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index4">Listado</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Create">Crear</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div>
+            @RenderBody()
+        </div>
+        @*TODO:
+        En esta vista (vista de diseño '_Layout.cshtml') permite definir que la seccion de scripts
         no sea obligatorio en todas las páginas
         En 'Home/Details4.cshtml' se está definiendo esta seccion, pero en otras páginas no se define.
-    *@
-    @RenderSection("Scripts", required:false)
+        *@
+        @RenderSection("Scripts", required:false)
+    </div>    
 </body>
 </html>
