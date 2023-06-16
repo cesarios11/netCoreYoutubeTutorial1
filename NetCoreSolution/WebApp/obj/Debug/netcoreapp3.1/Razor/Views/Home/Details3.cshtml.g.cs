@@ -27,7 +27,7 @@ using WebApp.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e4a39edb0480a17351fc8f8ef69fbcdea0448bb4", @"/Views/Home/Details3.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"72312073a329042345247aa306631491cef08693", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"8d5c79bd31abb7b2ace1eee61c37fd5b8742b34f", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Home_Details3 : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<Amigo>
     #nullable disable
