@@ -3,7 +3,32 @@
     ViewBag.Title = "Amigos detalles";
 }
 
-<h2>@Model.Titulo</h2>
+<divc class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.Amigo.Nombre</h1>
+            </div>
+            <div class="card-body text-center">
+                <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP4cZNptAFfqICoWFdssOLCRJNeq3nUxr0uqxRm28l2nc_pq-n9wJkIHRpnluLn9lV6ow&usqp=CAU" />
+                <h4>Amigo ID: @Model.Amigo.Id</h4>
+                <h4>Amigo ID: @Model.Amigo.Email</h4>
+                <h4>Amigo ID: @Model.Amigo.Ciudad</h4>
+            </div>
+            <div class="card-footer text-center">
+                <a href="#" class="btn btn-primary">Volver</a>
+                <a href="#" class="btn btn-primary">Editar</a>
+                <a href="#" class="btn btn-danger">Borrar</a>
+            </div>
+        </div>
+    </div>
+</divc>
+@section Scripts
+    {
+    <script src="~/js/myscript.js"></script>
+    }
+
+@*<h2>@Model.Titulo</h2>
 <h3>@Model.Subtitulo</h3>
 <div>
     @{
@@ -31,4 +56,4 @@
 @section Scripts
     {
     <script src="~/js/myscript.js"></script>
-}
+}*@

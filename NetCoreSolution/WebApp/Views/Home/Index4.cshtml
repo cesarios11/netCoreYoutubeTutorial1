@@ -2,18 +2,35 @@
 @{    
     ViewBag.Title = "Amigos indice";
 }
-<table>
+<div class="card-deck">
+    @foreach(var amigo in Model)
+    {
+     <div class="card m-3">
+         <div class="card-header">
+             <h3>@amigo.Nombre</h3>
+         </div>
+         <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP4cZNptAFfqICoWFdssOLCRJNeq3nUxr0uqxRm28l2nc_pq-n9wJkIHRpnluLn9lV6ow&usqp=CAU" />
+         <div class="card-footer text-center">
+             <a href="#" class="btn btn-primary">Ver</a>
+             <a href="#" class="btn btn-primary">Editar</a>
+             <a href="#" class="btn btn-danger">Borrar</a>
+         </div>
+     </div>
+    }
+</div>
+
+@*<table>
     <tr>
         <th>Nombre</th>
         <th>Email</th>
         <th>Ciudad</th>
-    </tr>        
+    </tr>
     @foreach (var amigo in Model)
     {
         <tr>
             <td>@amigo.Nombre</td>
             <td>@amigo.Email</td>
             <td>@amigo.Ciudad</td>
-        </tr>            
-    }        
-</table>
+        </tr>
+    }
+</table>*@
