@@ -6,5 +6,6 @@ namespace WebApp.Models
     {
         Amigo dameDatosAmigo(int id);
         List<Amigo> dameTodosLosAmigos();
+        Amigo nuevo(Amigo amigo);
     }
 }

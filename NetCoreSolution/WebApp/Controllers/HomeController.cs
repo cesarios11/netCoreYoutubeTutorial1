@@ -99,5 +99,24 @@ namespace WebApp.Controllers
 
             return View(detalles);
         }
+
+        [Route("Home/Create")]
+        public ViewResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("Home/Create")]
+        public IActionResult Create(Amigo amigo)
+        {
+            //TODO: Se realiza la validacion de modelo respecto a las etiquetas establecidas en el modelo 
+            if (ModelState.IsValid)
+            {
+                Amigo amigoModel = _amigoAlmacen.nuevo(amigo);
+                return RedirectToAction("Details5", new { id = amigo.Id });
+            }
+            return View();
+        }
     }
 }
