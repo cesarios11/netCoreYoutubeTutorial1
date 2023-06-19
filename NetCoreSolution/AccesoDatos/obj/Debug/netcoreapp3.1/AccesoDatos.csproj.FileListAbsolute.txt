@@ -1,0 +1,10 @@
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\bin\Debug\netcoreapp3.1\AccesoDatos.deps.json
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\bin\Debug\netcoreapp3.1\AccesoDatos.dll
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\bin\Debug\netcoreapp3.1\AccesoDatos.pdb
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\obj\Debug\netcoreapp3.1\AccesoDatos.csproj.AssemblyReference.cache
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\obj\Debug\netcoreapp3.1\AccesoDatos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\obj\Debug\netcoreapp3.1\AccesoDatos.AssemblyInfoInputs.cache
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\obj\Debug\netcoreapp3.1\AccesoDatos.AssemblyInfo.cs
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\obj\Debug\netcoreapp3.1\AccesoDatos.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\obj\Debug\netcoreapp3.1\AccesoDatos.dll
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\AccesoDatos\obj\Debug\netcoreapp3.1\AccesoDatos.pdb
