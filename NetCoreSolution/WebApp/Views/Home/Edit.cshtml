@@ -1,0 +1,98 @@
+﻿@model EditarAmigoModel
+@{
+    ViewBag.Title = "Editar amigo";
+    var rutaFoto = string.Empty;
+    if (!string.IsNullOrEmpty(Model.ProfilePictureUrl))
+    {
+        rutaFoto = Model.ProfilePictureUrl;
+    }
+    else
+    {
+        if (!string.IsNullOrEmpty(Model.rutaFotoLocalExistente))
+        {
+            rutaFoto = $"/images/{Model.rutaFotoLocalExistente}";
+        }
+        else
+        {
+            rutaFoto = "~/images/noProfilePicture.jpg";
+        }
+    }
+}
+<br />
+<form asp-controller="Home" asp-action="Edit" method="post" class="m-3" enctype="multipart/form-data">
+    @*TODO: Se incluye el siguiente div para realizar y mostrar el resumen de TODOS los errores en validaciones*@
+    @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+    <input hidden asp-for="Id" />
+    <input hidden asp-for="rutaFotoLocalExistente" />
+
+    @*TODO: El label y el input está vinculado a la propiedad 'Nombre' del modelo*@
+    <div class="form-group row">
+        <label asp-for="Nombre" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Nombre" class="form-control" placeholder="Nombre" />
+            @*TODO: Se especifica un tag span para mostrar el error de validacion para el campo*@
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+    </div>
+    @*TODO: El label y el input está vinculado a la propiedad 'Email' del modelo*@
+    <div class="form-group row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" placeholder="Email" />
+            @*TODO: Se especifica un tag span para mostrar el error de validacion para el campo*@
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    @*TODO: El label y el input está vinculado a la propiedad 'ProfilePictureUrl' del modelo*@
+    <div class="form-group row">
+        <label asp-for="ProfilePictureUrl" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="ProfilePictureUrl" class="form-control" placeholder="URL Imagen" />
+        </div>
+    </div>
+    @*TODO: El label y el input está vinculado a la propiedad 'Ciudad' del modelo*@
+    @*TODO: Además está asociado a un enum con las difernetes ciudades/provincias*@
+    <div class="form-group row">
+        <label asp-for="Ciudad" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="Ciudad" class="custom-select mr-sm-2" asp-items="Html.GetEnumSelectList<Provincia>()">
+                <option value="">Seleccione una ciudad</option>
+            </select>
+            @*TODO: Se especifica un tag span para mostrar el error de validacion para el campo*@
+            <span asp-validation-for="Ciudad" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Foto" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input asp-for="Foto" class="form-control custom-file-input" />
+                <label class="custom-file-label">Clic para modificar la imagen</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row col-sm-4 offset-4">
+        <img class="imageThumbnail" src="@rutaFoto" asp-append-version="true" />
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <a asp-controller="Home" asp-action="Index4" class="btn btn-primary">Volver</a>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </div>
+
+    @section Scripts{
+        <script>
+            $document.ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName);
+                });
+            });
+        </script>
+    }
+</form>

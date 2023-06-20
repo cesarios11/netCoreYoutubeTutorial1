@@ -130,3 +130,4 @@ C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\WebApp.dll
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
+C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Edit.cshtml.g.cs

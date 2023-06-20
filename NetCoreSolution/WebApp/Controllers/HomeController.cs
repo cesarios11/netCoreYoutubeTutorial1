@@ -120,24 +120,90 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 string guidImagen = null;
+                //TODO: Si se adjunta imagen, entonces se escribe la imagen localmente en wwwroot/images
                 if (amigo.Foto != null)
                 {
                     string ficherosImagenes = Path.Combine(_hosting.WebRootPath, "images");
                     guidImagen = $"{Guid.NewGuid().ToString()}-{amigo.Foto.FileName}";
                     string rutaDefinitiva = Path.Combine(ficherosImagenes, guidImagen);
-                    amigo.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+                    //amigo.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+                    using (var filestream = new FileStream(rutaDefinitiva, FileMode.Create))
+                    {
+                        amigo.Foto.CopyTo(filestream);
+                    }
                 }
 
                 Amigo nuevoAmigo = new Amigo();
                 nuevoAmigo.Nombre = amigo.Nombre;
                 nuevoAmigo.Email = amigo.Email;
                 nuevoAmigo.Ciudad = amigo.Ciudad;
+                nuevoAmigo.ProfilePictureUrl = amigo.ProfilePictureUrl;
                 nuevoAmigo.LocalPathImage = guidImagen;
 
                 _amigoAlmacen.nuevo(nuevoAmigo);
                 return RedirectToAction("Details5", new { id = nuevoAmigo.Id });
             }
             return View();
+        }
+
+        [HttpGet]        
+        [Route("Home/Edit/{id}")]
+        public ViewResult Edit(int id)
+        {
+            Amigo amigo = _amigoAlmacen.dameDatosAmigo(id);
+            EditarAmigoModel amigoEditar = new EditarAmigoModel
+            {
+                Id = amigo.Id,
+                Nombre = amigo.Nombre,
+                Email = amigo.Email,
+                Ciudad = amigo.Ciudad,
+                ProfilePictureUrl = amigo.ProfilePictureUrl,
+                rutaFotoLocalExistente = amigo.LocalPathImage
+            };
+
+            return View(amigoEditar);
+        }
+
+        [HttpPost]
+        [Route("Home/Edit")]
+        public IActionResult Edit(EditarAmigoModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Amigo amigo = _amigoAlmacen.dameDatosAmigo(model.Id);
+                amigo.Nombre = model.Nombre;
+                amigo.Email = model.Email;
+                amigo.Ciudad = model.Ciudad;
+                amigo.ProfilePictureUrl = model.ProfilePictureUrl;
+                if (model.Foto != null)
+                {
+                    if (model.rutaFotoLocalExistente != null)
+                    {
+                        string ruta = Path.Combine(_hosting.WebRootPath, "images", model.rutaFotoLocalExistente);
+                        System.IO.File.Delete(ruta);
+                    }
+                    amigo.LocalPathImage = SubirImagen(model);
+                }
+                Amigo amigoModificado = _amigoAlmacen.modificar(amigo);
+                return RedirectToAction("Index4");
+            }
+            return View(model);
+        }
+
+        private string SubirImagen(EditarAmigoModel model)
+        {
+            string nombreFichero = string.Empty;
+            if (model.Foto != null)
+            {
+                string carpetaSubida = Path.Combine(_hosting.WebRootPath, "images");
+                nombreFichero = $"{Guid.NewGuid().ToString()}-{model.Foto.FileName}";
+                string ruta = Path.Combine(carpetaSubida, nombreFichero);
+                using (var filestream = new FileStream(ruta, FileMode.Create))
+                {
+                    model.Foto.CopyTo(filestream);
+                }
+            }
+            return nombreFichero;
         }
     }
 }
