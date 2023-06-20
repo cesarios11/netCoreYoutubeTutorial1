@@ -5,22 +5,36 @@
 <div class="card-deck">
     @foreach(var amigo in Model)
     {
-     <div class="card m-3">
-         <div class="card-header">
-             <h3>@amigo.Nombre</h3>
-         </div>
-         @*TODO:
+        var rutaFoto = string.Empty;
+        if (!string.IsNullOrEmpty(amigo.ProfilePictureUrl)){
+            rutaFoto = amigo.ProfilePictureUrl;
+        }
+        else
+        {
+            if (!string.IsNullOrEmpty(amigo.LocalPathImage)){
+                rutaFoto = $"/images/{amigo.LocalPathImage}";
+            }
+            else
+            {
+                rutaFoto = "~/images/noProfilePicture.jpg";
+            }
+        }
+
+        <div class="card m-3" style="min-width:18rem;max-width:30.5%;">
+            <div class="card-header">
+                <h3>@amigo.Nombre</h3>
+            </div>
+            @*TODO:
                 * asp-append-version="true" como tag helper en el tag img, evita que se tenga que hacer ctl F5 para refrescar la imagen si esta cambia.
                 * evita tener la imagen en caché.
-         *@
-         @*<img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP4cZNptAFfqICoWFdssOLCRJNeq3nUxr0uqxRm28l2nc_pq-n9wJkIHRpnluLn9lV6ow&usqp=CAU" asp-append-version="true"/>*@
-            <img class="card-img-top" src="@amigo.ProfilePictureUrl" asp-append-version="true" />
-         <div class="card-footer text-center">
-             <a asp-controller="Home" asp-action="Details5" asp-route-id="@amigo.Id" class="btn btn-primary">Ver</a>
-             <a href="#" class="btn btn-primary">Editar</a>
-             <a href="#" class="btn btn-danger">Borrar</a>
-         </div>
-     </div>
+            *@         
+            <img class="card-img-top imagen" src="@rutaFoto" asp-append-version="true" />
+            <div class="card-footer text-center">
+                <a asp-controller="Home" asp-action="Details5" asp-route-id="@amigo.Id" class="btn btn-primary">Ver</a>
+                <a href="#" class="btn btn-primary">Editar</a>
+                <a href="#" class="btn btn-danger">Borrar</a>
+            </div>
+        </div>
     }
 </div>
 

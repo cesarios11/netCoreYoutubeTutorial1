@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace WebApp.Models
 {
-    public class Amigo
+    public class CrearAmigoModel
     {
-        //TODO: Se crean las validaciones para cada uno de los campos del modelo
-        public int Id { get; set; }
+        //TODO: Se crean las validaciones para cada uno de los campos del modelo        
         [Required(ErrorMessage = "*Obligatorio"), MaxLength(20, ErrorMessage = "*Máximo 20 caracteres")]
         public string Nombre { get; set; }
 
@@ -19,7 +20,6 @@ namespace WebApp.Models
         [Required(ErrorMessage = "*Debe seleccionar una ciudad")]
         public Provincia? Ciudad { get; set; }
 
-        public string LocalPathImage { get; set; }
-
+        public IFormFile Foto { get; set; }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IO;
 using WebApp.Models;
 using WebApp.ViewModels;
 
@@ -7,9 +10,11 @@ namespace WebApp.Controllers
     public class HomeController : Controller
     {
         private IAmigoAlmacen _amigoAlmacen;
-        public HomeController(IAmigoAlmacen amigoAlmacen)
+        private IHostingEnvironment _hosting;
+        public HomeController(IAmigoAlmacen amigoAlmacen, IHostingEnvironment hosting)
         {
             _amigoAlmacen = amigoAlmacen;
+            _hosting = hosting;
         }
 
         [Route("")]
@@ -17,7 +22,8 @@ namespace WebApp.Controllers
         [Route("Home/Index")]
         public string Index()
         {
-            return _amigoAlmacen.dameDatosAmigo(1).Email;
+            Amigo amigo = _amigoAlmacen.dameDatosAmigo(1);
+            return amigo != null ? amigo.Email : "sin email";            
         }
 
         [Route("Home/Index1")]
@@ -108,13 +114,28 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Route("Home/Create")]
-        public IActionResult Create(Amigo amigo)
+        public IActionResult Create(CrearAmigoModel amigo)
         {
             //TODO: Se realiza la validacion de modelo respecto a las etiquetas establecidas en el modelo 
             if (ModelState.IsValid)
             {
-                Amigo amigoModel = _amigoAlmacen.nuevo(amigo);
-                return RedirectToAction("Details5", new { id = amigo.Id });
+                string guidImagen = null;
+                if (amigo.Foto != null)
+                {
+                    string ficherosImagenes = Path.Combine(_hosting.WebRootPath, "images");
+                    guidImagen = $"{Guid.NewGuid().ToString()}-{amigo.Foto.FileName}";
+                    string rutaDefinitiva = Path.Combine(ficherosImagenes, guidImagen);
+                    amigo.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+                }
+
+                Amigo nuevoAmigo = new Amigo();
+                nuevoAmigo.Nombre = amigo.Nombre;
+                nuevoAmigo.Email = amigo.Email;
+                nuevoAmigo.Ciudad = amigo.Ciudad;
+                nuevoAmigo.LocalPathImage = guidImagen;
+
+                _amigoAlmacen.nuevo(nuevoAmigo);
+                return RedirectToAction("Details5", new { id = nuevoAmigo.Id });
             }
             return View();
         }

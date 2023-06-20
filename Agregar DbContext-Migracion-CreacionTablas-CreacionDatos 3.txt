@@ -7,3 +7,9 @@
 7. Se sobre escribe le método 'OnModelCreating' en la clase 'AppDbContext'
 8. Ejecutar en el Package Manager Console el comando 'Add-Migration SeedAmigosTable'
 9. Ejecutar en el Package Manager Console el comando 'Update-Database'
+________________
+Actualizar la base de datos vía entity framework
+
+1. View -> Other windows -> Package Manager Console
+2. Ejecutar en el Package Manager Console el comando 'Add-Migration AddLocalPathImage'
+3. Ejecutar en el Package Manager Console el comando 'Update-Database'

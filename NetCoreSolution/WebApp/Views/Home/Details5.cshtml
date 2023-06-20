@@ -1,6 +1,22 @@
 ﻿@model DetallesView
 @{
     ViewBag.Title = "Amigos detalles";
+    var rutaFoto = string.Empty;
+    if (!string.IsNullOrEmpty(Model.Amigo.ProfilePictureUrl))
+    {
+        rutaFoto = Model.Amigo.ProfilePictureUrl;
+    }
+    else
+    {
+        if (!string.IsNullOrEmpty(Model.Amigo.LocalPathImage))
+        {
+            rutaFoto = $"/images/{Model.Amigo.LocalPathImage}";
+        }
+        else
+        {
+            rutaFoto = "~/images/noProfilePicture.jpg";
+        }
+    }
 }
 
 <divc class="row justify-content-center m-3">
@@ -10,8 +26,7 @@
                 <h1>@Model.Amigo.Nombre</h1>
             </div>
             <div class="card-body text-center">
-                @*<img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP4cZNptAFfqICoWFdssOLCRJNeq3nUxr0uqxRm28l2nc_pq-n9wJkIHRpnluLn9lV6ow&usqp=CAU" />*@
-                <img class="card-img-top" src="@Model.Amigo.ProfilePictureUrl" />
+                <img class="card-img-top" src="@rutaFoto" asp-append-version="true" />
                 <h4>Amigo ID: @Model.Amigo.Id</h4>
                 <h4>Email: @Model.Amigo.Email</h4>
                 <h4>Ciudad: @Model.Amigo.Ciudad</h4>
