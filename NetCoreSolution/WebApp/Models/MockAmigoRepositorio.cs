@@ -14,6 +14,18 @@ namespace WebApp.Models
             amigosLista.Add(new Amigo() { Id = 2, Nombre = "Juan", Ciudad = Provincia.Bucaramanga, ProfilePictureUrl= "https://ichef.bbci.co.uk/images/ic/448xn/p0738jgw.jpg", Email = "juan@gmail.com" });
             amigosLista.Add(new Amigo() { Id = 3, Nombre = "Sara", Ciudad = Provincia.Cali, ProfilePictureUrl= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP4cZNptAFfqICoWFdssOLCRJNeq3nUxr0uqxRm28l2nc_pq-n9wJkIHRpnluLn9lV6ow&usqp=CAU", Email = "sara@gmail.com" });
         }
+
+        public Amigo borrar(int id)
+        {
+            Amigo amigo = amigosLista.FirstOrDefault(x => x.Id == id);
+            if (amigo != null)
+            {
+                amigosLista.Remove(amigo);
+            }
+
+            return amigo;
+        }
+
         public Amigo dameDatosAmigo(int id)
         {
             return this.amigosLista.FirstOrDefault(e => e.Id == id);
@@ -22,6 +34,20 @@ namespace WebApp.Models
         public List<Amigo> dameTodosLosAmigos()
         {
             return amigosLista;
+        }
+
+        public Amigo modificar(Amigo modificarAmigo)
+        {
+            Amigo amigo = amigosLista.FirstOrDefault(x => x.Id == modificarAmigo.Id);
+            if (amigo != null)
+            {
+                amigo.Nombre = modificarAmigo.Nombre;
+                amigo.Email = modificarAmigo.Email;
+                amigo.Ciudad = modificarAmigo.Ciudad;
+                amigo.ProfilePictureUrl = modificarAmigo.ProfilePictureUrl;
+            }
+
+            return amigo;
         }
 
         public Amigo nuevo(Amigo amigo)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,13 +26,19 @@ namespace WebApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO:Inicialización del motor de base de datos que se va a utilizar ('Sql Server')
+            services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("ConexionSQLServer")));
+
+            //TODO: Se inicializa la configuración  del patrón MVC.
             services.AddMvc(options => options.EnableEndpointRouting = false);
             //services.AddMvcCore(options => options.EnableEndpointRouting = false);
 
-
             //TODO:Crea un servicio singleton cuando se solicita por primera vez y esta es la misma instancia que 
             //es utilizada por todas las solicitudes posteriores.
-            services.AddSingleton<IAmigoAlmacen, MockAmigoRepositorio>();
+            //services.AddSingleton<IAmigoAlmacen, MockAmigoRepositorio>();
+
+            //TODO:Se utiliza el acceso a datos de la BD SQL Server.
+            services.AddScoped<IAmigoAlmacen, SQLAmigoRepositorio>();
 
             /*
             //TODO:Se crea un servicio transitorio. Crea una instancia de un servicio transitorio, cada vez que se solicita.
