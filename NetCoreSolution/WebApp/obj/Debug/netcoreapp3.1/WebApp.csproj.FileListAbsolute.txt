@@ -81,6 +81,7 @@ C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\Administrador\Documents\CESARIOS\UDEMY\GIT GITHUB\netCoreRepo\tutorial1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll

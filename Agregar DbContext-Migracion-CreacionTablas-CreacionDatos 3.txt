@@ -1,0 +1,9 @@
+1. Instalar desde Manage NuGet Package 'Microsoft.EntityFrameworkCore.SqlServer'
+2. Crear la clase 'AppDbContext' que hereda de 'DbContext'
+3. View - > 'SQLServer Object explorer' -> Add SQLServer -> Seleccionar servidor y conectar
+4. View -> Other windows -> Package Manager Console
+5. Instalar desde nuget 'Microsoft.EntityFrameworkCore.Tools'
+6. Ejecutar en el Package Manager Console el comando 'Add-Migration InitialCreate'
+7. Se sobre escribe le método 'OnModelCreating' en la clase 'AppDbContext'
+8. Ejecutar en el Package Manager Console el comando 'Add-Migration SeedAmigosTable'
+9. Ejecutar en el Package Manager Console el comando 'Update-Database'
