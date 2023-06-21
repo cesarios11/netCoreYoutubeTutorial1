@@ -103,6 +103,12 @@ namespace WebApp.Controllers
             detalles.Subtitulo = "Mis detalles";
             detalles.Amigo = _amigoAlmacen.dameDatosAmigo(id?? 1);
 
+            if (detalles.Amigo == null)
+            {
+                Response.StatusCode = 404;
+                return View("AmigoNotFound", id);
+            }
+
             return View(detalles);
         }
 

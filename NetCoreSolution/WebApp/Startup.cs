@@ -56,7 +56,16 @@ namespace WebApp
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
+                DeveloperExceptionPageOptions opt = new DeveloperExceptionPageOptions {
+                    SourceCodeLineCount = 2
+                };
+                app.UseDeveloperExceptionPage(opt);   
+            }
+            else if (env.IsProduction() || env.IsStaging())
+            {
+                //TODO: Redirige al controlador 'ErrorController' y se muestra la vista 'Error' ubicada en Shared para manejar los errores que se puedan producir
+                app.UseStatusCodePagesWithRedirects("/Error/{0}");
             }
             /*
             DefaultFilesOptions d = new DefaultFilesOptions();
@@ -78,25 +87,29 @@ namespace WebApp
             //app.UseMvcWithDefaultRoute();
 
             //TODO:Define un enrutamiento personalizado
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            //});
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
 
             //TODO: Este enrutamiento obliga a definir la etiqueta '[Route("Home/Details5/{id?}")]' para cada 
             //método del controlador.
             //Si solo se usa app.UseMvcWithDefaultRoute(); entonces estas etiquetas no son necesarias
-            app.UseMvc();
+            //app.UseMvc();
 
+            /*
             app.Use(async(context, next) => {
                 await context.Response.WriteAsync($"Entorno: {env.EnvironmentName}");
                 await next.Invoke();
             });
+            */
 
+            /*
             app.Run(async (context) => {
                 //await context.Response.WriteAsync(System.Diagnostics.Process.GetCurrentProcess().ProcessName);
                 await context.Response.WriteAsync($"\n{_configuration["KeyWord"]}");
             });
+            */
             
         }
     }
