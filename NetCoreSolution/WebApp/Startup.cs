@@ -71,7 +71,7 @@ namespace WebApp
             app.UseStaticFiles();   
             */
 
-            //TODO: Middleware que permite carar los archivos estáticos: imagenes, js, css etc
+            //TODO: Middleware que permite cargar los archivos estáticos: imagenes, js, css etc
             app.UseStaticFiles();
 
             //TODO: Usa por defecto el enrutamiento de las aplicaciones asp.net core
@@ -87,7 +87,7 @@ namespace WebApp
             //método del controlador.
             //Si solo se usa app.UseMvcWithDefaultRoute(); entonces estas etiquetas no son necesarias
             app.UseMvc();
-            
+
             app.Use(async(context, next) => {
                 await context.Response.WriteAsync($"Entorno: {env.EnvironmentName}");
                 await next.Invoke();

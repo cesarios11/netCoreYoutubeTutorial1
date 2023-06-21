@@ -166,8 +166,9 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Route("Home/Edit")]
-        public IActionResult Edit(EditarAmigoModel model)
+        public IActionResult EditFriend(EditarAmigoModel model)
         {
+            //TODO: Se realiza la validacion de modelo respecto a las etiquetas establecidas en el modelo 
             if (ModelState.IsValid)
             {
                 Amigo amigo = _amigoAlmacen.dameDatosAmigo(model.Id);
