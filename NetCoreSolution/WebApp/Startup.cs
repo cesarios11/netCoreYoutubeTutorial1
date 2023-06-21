@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,13 @@ namespace WebApp
             services.AddScoped<IAmigoAlmacen, MockAmigoRepositorio>();
             */
 
+            //TODO:
+            //AddIdentity: Agrega la configuración predeterminada para el sistema de gestión de identidades para el usuario especificado y para los roles.
+            //IdentityUser: Esta clase proporciona para asp net core propiedades de usuario. (Nombre usuario, password, un hash, un email etc).
+            //IdentityRole: Esta clase de manera predeterminada en asp net core se utiliza para administrar usuarios registrados en la aplicación.
+            //AddEntityFrameworkStores: Para almacenar y recuperar la información de usuario de las tablas, pasándole como argumento 'AppDbContext'
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +92,9 @@ namespace WebApp
 
             //TODO: Middleware que permite cargar los archivos estáticos: imagenes, js, css etc
             app.UseStaticFiles();
+
+            //TODO:Se especifica que utilice la autenticación.
+            app.UseAuthentication();
 
             //TODO: Usa por defecto el enrutamiento de las aplicaciones asp.net core
             //app.UseMvcWithDefaultRoute();

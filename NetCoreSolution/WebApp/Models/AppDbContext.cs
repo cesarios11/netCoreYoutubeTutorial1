@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Models
 {
-    public class AppDbContext : DbContext
-    {
+    //TODO: La clase de la cual heredaba antes 'AppDbContext' era 'DbContext'.
+    //'DbContext' hereda de 'IdentityDbContext' por lo cual no hay problema en decirle a 'AppDbContext' que herede de esta última
+    public class AppDbContext : IdentityDbContext
+    {        
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {
                 
@@ -17,13 +20,17 @@ namespace WebApp.Models
         {
             //TODO:Valida si existen datos o no. En caso que no existan, va a
             //realizar un insert de un primer registro.
+            /*
             modelBuilder.Entity<Amigo>().HasData(new Amigo 
             { 
                 Id= 1, Nombre="NN", 
                 Ciudad=Provincia.Bogota, 
                 Email="email@correo.com",
                 ProfilePictureUrl =""
-            });            
+            });
+            */
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }

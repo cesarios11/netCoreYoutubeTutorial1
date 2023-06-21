@@ -98,6 +98,9 @@ C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetC
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\WebApp.pdb
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\WebApp.Views.dll
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\WebApp.Views.pdb
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
