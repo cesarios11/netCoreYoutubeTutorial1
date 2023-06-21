@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers
 {
@@ -15,5 +17,17 @@ namespace WebApp.Controllers
             }
             return View("Error");
         }
+
+        [AllowAnonymous]
+        [Route("Error")]
+        public IActionResult Error()
+        {
+            var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            ViewBag.ExceptionPath = exceptionHandlerPathFeature.Path;
+            ViewBag.ExceptionMessage = exceptionHandlerPathFeature.Error.Message;
+            ViewBag.ExceptionStackTrace = exceptionHandlerPathFeature.Error.StackTrace;
+            return View("ErrorGenerico");
+        }
+
     }
 }

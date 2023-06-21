@@ -65,6 +65,8 @@ namespace WebApp
             else if (env.IsProduction() || env.IsStaging())
             {
                 //TODO: Redirige al controlador 'ErrorController' y se muestra la vista 'Error' ubicada en Shared para manejar los errores que se puedan producir
+                app.UseExceptionHandler("/Error");
+                //TODO: Redirige al controlador 'ErrorController' y se muestra la vista 'Error' que recibe un statusCode ubicada en Shared para manejar los errores que se puedan producir
                 app.UseStatusCodePagesWithRedirects("/Error/{0}");
             }
             /*

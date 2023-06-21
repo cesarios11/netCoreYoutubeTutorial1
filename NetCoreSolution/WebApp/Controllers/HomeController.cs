@@ -52,6 +52,15 @@ namespace WebApp.Controllers
             return View(modelo);
         }
 
+        [Route("Home/Index5")]
+        public ViewResult Index5()
+        {
+            //TODO: Se forza una excepcion para utilizar la vista de error generico y visualizar el error
+            throw new Exception("Forzando error");
+            var modelo = _amigoAlmacen.dameTodosLosAmigos();
+            return View(modelo);
+        }
+
         [Route("Home/Details1")]
         public JsonResult Details1()
         {
