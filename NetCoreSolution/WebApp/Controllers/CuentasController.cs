@@ -60,5 +60,20 @@ namespace WebApp.Controllers
             }
             return View(model);
         }
+
+        [HttpPost]
+        [Route("Cuentas/CerrarSesion")]
+        public async Task<IActionResult> CerrarSesion()
+        {
+            await this._gestionLogin.SignOutAsync();
+            return RedirectToAction("Index4", "Home");
+        }
+
+        [HttpGet]
+        [Route("Cuentas/Login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
     }
 }
