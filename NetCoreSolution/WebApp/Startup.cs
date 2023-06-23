@@ -55,7 +55,16 @@ namespace WebApp
             //IdentityUser: Esta clase proporciona para asp net core propiedades de usuario. (Nombre usuario, password, un hash, un email etc).
             //IdentityRole: Esta clase de manera predeterminada en asp net core se utiliza para administrar usuarios registrados en la aplicación.
             //AddEntityFrameworkStores: Para almacenar y recuperar la información de usuario de las tablas, pasándole como argumento 'AppDbContext'
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            //Se agrega '.AddErrorDescriber<ErroresCastellano>()' para que tome los valores de texto de las validaciones de errores de la clase 'ErroresCastellano'.
+            services.AddIdentity<IdentityUser, IdentityRole>().AddErrorDescriber<ErroresCastellano>().AddEntityFrameworkStores<AppDbContext>();
+
+            //TODO:Se configuran las restricciones para el campo password
+            services.Configure<IdentityOptions>(opciones => {
+                opciones.Password.RequiredLength = 8;
+                opciones.Password.RequiredUniqueChars = 3;
+                opciones.Password.RequireNonAlphanumeric = false;
+
+            });
 
         }
 
