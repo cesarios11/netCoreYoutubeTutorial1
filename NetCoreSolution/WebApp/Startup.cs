@@ -58,6 +58,12 @@ namespace WebApp
             //Se agrega '.AddErrorDescriber<ErroresCastellano>()' para que tome los valores de texto de las validaciones de errores de la clase 'ErroresCastellano'.
             services.AddIdentity<IdentityUser, IdentityRole>().AddErrorDescriber<ErroresCastellano>().AddEntityFrameworkStores<AppDbContext>();
 
+            //TODO: Si por defecto se redirige al controlador 'Account' (que trae predeterminadamente Identity)
+            //y no a 'Cuentas', entonces es necesario utilizar la siguiente línea de código.
+            //Adicional a esto, si el usuario no está logueado, entonces lo redirige a la página de Login para que
+            //inicie sesión.
+            services.ConfigureApplicationCookie(options=> options.LoginPath ="/Cuentas/Login");
+
             //TODO:Se configuran las restricciones para el campo password
             services.Configure<IdentityOptions>(opciones => {
                 opciones.Password.RequiredLength = 8;

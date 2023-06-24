@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class CuentasController : Controller
     {
         //TODO:
@@ -24,6 +26,8 @@ namespace WebApp.Controllers
 
         [HttpGet]
         [Route("Cuentas/Registro")]
+        //TODO: '[AllowAnonymous]' Permite que se acceda a esta funcionalidad así haya una restricción '[Authorize]' a nivel de clase.
+        [AllowAnonymous]
         public IActionResult Registro()
         {
             return View();
@@ -31,6 +35,8 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Route("Cuentas/Registro")]
+        //TODO: '[AllowAnonymous]' Permite que se acceda a esta funcionalidad así haya una restricción '[Authorize]' a nivel de clase.
+        [AllowAnonymous]
         public async Task<IActionResult> Registro(RegistroModelo model)
         {
             //Valida que cumpla las expresiones regulares definidas en el modelo.
@@ -72,6 +78,8 @@ namespace WebApp.Controllers
 
         [HttpGet]
         [Route("Cuentas/Login")]
+        //TODO: '[AllowAnonymous]' Permite que se acceda a esta funcionalidad así haya una restricción '[Authorize]' a nivel de clase.
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
@@ -79,6 +87,8 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Route("Cuentas/Login")]
+        //TODO: '[AllowAnonymous]' Permite que se acceda a esta funcionalidad así haya una restricción '[Authorize]' a nivel de clase.
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModelo model)
         {
             if (ModelState.IsValid)

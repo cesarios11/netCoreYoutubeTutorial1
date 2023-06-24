@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
@@ -7,6 +8,9 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
+    //TODO: El atributo Authorize restringe el uso de todos los métodos si el usuario no está logueado.
+    //(A nivel de clase)
+    [Authorize]
     public class HomeController : Controller
     {
         private IAmigoAlmacen _amigoAlmacen;
@@ -45,6 +49,8 @@ namespace WebApp.Controllers
             return View("~/MisVistas/Index.cshtml");
         }
 
+        //[AllowAnonymous]
+        //TODO: '[AllowAnonymous]' Permite que se acceda a esta funcionalidad así haya una restricción '[Authorize]' a nivel de clase.
         [Route("Home/Index4")]
         public ViewResult Index4()
         {
@@ -122,6 +128,8 @@ namespace WebApp.Controllers
         }
 
         [Route("Home/Create")]
+        //TODO: El atributo Authorize restringe el uso del método si el usuario no está logueado. (A nivel de método)
+        //[Authorize]
         public ViewResult Create()
         {
             return View();
@@ -129,6 +137,8 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Route("Home/Create")]
+        //TODO: El atributo Authorize restringe el uso del método si el usuario no está logueado. (A nivel de método)
+        //[Authorize]
         public IActionResult Create(CrearAmigoModel amigo)
         {
             //TODO: Se realiza la validacion de modelo respecto a las etiquetas establecidas en el modelo 
