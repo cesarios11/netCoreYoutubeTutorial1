@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Threading.Tasks;
 using WebApp.ViewModels;
 
@@ -73,6 +74,22 @@ namespace WebApp.Controllers
         [Route("Cuentas/Login")]
         public IActionResult Login()
         {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("Cuentas/Login")]
+        public async Task<IActionResult> Login(LoginViewModelo model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _gestionLogin.PasswordSignInAsync(model.Email, model.Password, model.Recuerdame, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index4", "Home");
+                }
+                ModelState.AddModelError(string.Empty, "Inicio de sesión no valido");
+            }
             return View();
         }
     }
