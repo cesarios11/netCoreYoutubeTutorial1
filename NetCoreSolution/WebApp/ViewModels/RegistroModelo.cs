@@ -25,5 +25,8 @@ namespace WebApp.ViewModels
         [Display(Name = "Repetir Password")]        
         [Compare("Password", ErrorMessage = "*El password y la confirmacion no coinciden")]
         public string PasswordValidar { get; set; }
+
+        [Display(Name = "Ayuda Password")]
+        public string ayudaPass { get; set; }
     }
 }

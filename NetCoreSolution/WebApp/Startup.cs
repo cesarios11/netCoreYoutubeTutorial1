@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Models;
+using WebApp.ViewModels;
 
 namespace WebApp
 {
@@ -52,11 +53,11 @@ namespace WebApp
 
             //TODO:
             //AddIdentity: Agrega la configuración predeterminada para el sistema de gestión de identidades para el usuario especificado y para los roles.
-            //IdentityUser: Esta clase proporciona para asp net core propiedades de usuario. (Nombre usuario, password, un hash, un email etc).
+            //IdentityUser/UsuarioAplicacion: Esta clase proporciona para asp net core propiedades de usuario. (Nombre usuario, password, un hash, un email etc).
             //IdentityRole: Esta clase de manera predeterminada en asp net core se utiliza para administrar usuarios registrados en la aplicación.
             //AddEntityFrameworkStores: Para almacenar y recuperar la información de usuario de las tablas, pasándole como argumento 'AppDbContext'
             //Se agrega '.AddErrorDescriber<ErroresCastellano>()' para que tome los valores de texto de las validaciones de errores de la clase 'ErroresCastellano'.
-            services.AddIdentity<IdentityUser, IdentityRole>().AddErrorDescriber<ErroresCastellano>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<UsuarioAplicacion, IdentityRole>().AddErrorDescriber<ErroresCastellano>().AddEntityFrameworkStores<AppDbContext>();
 
             //TODO: Si por defecto se redirige al controlador 'Account' (que trae predeterminadamente Identity)
             //y no a 'Cuentas', entonces es necesario utilizar la siguiente línea de código.

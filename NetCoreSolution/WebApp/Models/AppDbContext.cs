@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebApp.ViewModels;
 
 namespace WebApp.Models
 {
     //TODO: La clase de la cual heredaba antes 'AppDbContext' era 'DbContext'.
     //'DbContext' hereda de 'IdentityDbContext' por lo cual no hay problema en decirle a 'AppDbContext' que herede de esta última
-    public class AppDbContext : IdentityDbContext
+    // La clase 'IdentityDbContext' ahora hale de la clase 'UsuarioAplicacion'
+    public class AppDbContext : IdentityDbContext<UsuarioAplicacion>
     {        
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {

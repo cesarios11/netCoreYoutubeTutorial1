@@ -12,13 +12,13 @@ namespace WebApp.Controllers
     {
         //TODO:
         //UserManager:Permite administrar y gestionar usuario;
-        private readonly UserManager<IdentityUser> _gestionUsuarios;
+        private readonly UserManager<UsuarioAplicacion> _gestionUsuarios;
 
         //TODO:
         //SignInManager:Contiene los métodos necesarios para que el usuario inicie sesión.
-        private readonly SignInManager<IdentityUser> _gestionLogin;
+        private readonly SignInManager<UsuarioAplicacion> _gestionLogin;
 
-        public CuentasController(UserManager<IdentityUser> gestionUsuarios, SignInManager<IdentityUser> gestionLogin)
+        public CuentasController(UserManager<UsuarioAplicacion> gestionUsuarios, SignInManager<UsuarioAplicacion> gestionLogin)
         {
             this._gestionUsuarios = gestionUsuarios;
             this._gestionLogin = gestionLogin;
@@ -43,10 +43,11 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 //Volcamos los datos de la clase Registro Modelo a la clase IdentityUSer.
-                var usuario = new IdentityUser
+                var usuario = new UsuarioAplicacion
                 {
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    ayudaPass = model.ayudaPass
                 };
 
                 //Guardamos datos de usuario en la tabla 'AspNetUsers' de base de datos .
