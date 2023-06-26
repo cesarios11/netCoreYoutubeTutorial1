@@ -139,6 +139,8 @@ C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetC
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\WebApp.TagHelpers.output.cache
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\WebApp.RazorCoreGenerate.cache
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\MisVistas\Index.cshtml.g.cs
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Cuentas\Login.cshtml.g.cs
+C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Cuentas\Registro.cshtml.g.cs
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\AmigoNotFound.cshtml.g.cs
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Create.cshtml.g.cs
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Details2.cshtml.g.cs
@@ -159,5 +161,3 @@ C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetC
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\WebApp.dll
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
-C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Cuentas\Registro.cshtml.g.cs
-C:\Users\Lenovo\Documents\CESARIOS\GIT HUB REPO\NET CORE\YOUTUBE TUTORIAL 1\NetCoreSolution\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Cuentas\Login.cshtml.g.cs

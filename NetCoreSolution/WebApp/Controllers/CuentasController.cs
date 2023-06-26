@@ -102,5 +102,23 @@ namespace WebApp.Controllers
             }
             return View();
         }
+
+        //TODO: Método que valida si ya existe una cuenta de correo para un nuevo registro de usuario.
+        //La asociación de esta validación con el campo está en la propiedad 'Email' de la clase 'RegistroModelo'
+        [AcceptVerbs("Get", "Post")]
+        [Route("Cuentas/ComprobarEmail")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ComprobarEmail(string email)
+        {
+            var user = await _gestionUsuarios.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($"El email {email} no esta disponible.");
+            }
+        }
     }
 }
