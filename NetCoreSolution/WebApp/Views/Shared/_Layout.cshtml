@@ -9,6 +9,17 @@
     <link href="~/css/sitio.css" rel="stylesheet" />
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+
+    @*TODO:
+        Permite agregar validaciones del lado del cliente
+    *@
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+
+    @*TODO:
+        Permite agregar validaciones del lado del cliente con base en los atributos de validación del lado del servidor ya existentes.
+    Es importante el orden 'jquery.js', 'jquery.validate.js' y 'jquery.validate.unobtrusive.js'
+    *@
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>   
     @*TODO:
             *Si el entorno es el de desarrollo, entonces cargue el archivo 'bootstrap.css localmente 
             desde la ubicación especificada.
