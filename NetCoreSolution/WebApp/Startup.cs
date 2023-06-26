@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +34,16 @@ namespace WebApp
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("ConexionSQLServer")));
 
             //TODO: Se inicializa la configuración  del patrón MVC.
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            //services.AddMvc(options => options.EnableEndpointRouting = false);
+            //Se incluye la política 'policy' para que requiera autenticación para acceder a las distintas funcionalidades de la aplicación
+            services.AddMvc(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+                options.EnableEndpointRouting = false;
+            }).AddXmlSerializerFormatters();
+
+
             //services.AddMvcCore(options => options.EnableEndpointRouting = false);
 
             //TODO:Crea un servicio singleton cuando se solicita por primera vez y esta es la misma instancia que 

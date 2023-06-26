@@ -7,6 +7,7 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
+    //TODO: Este controlador registra los usuarios que se almacenan en la tabla '[dbo].[AspNetUsers]' de base de datos.
     [Authorize]
     public class CuentasController : Controller
     {
