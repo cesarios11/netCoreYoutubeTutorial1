@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,6 +9,13 @@ namespace WebApp.Controllers
 {
     //TODO: Este controlador registra los usuarios que se almacenan en la tabla '[dbo].[AspNetRoles]' de base de datos.
     //TODO: Este controlador registra los usuarios que se almacenan en la tabla '[dbo].[AspNetUserRoles]' de base de datos.
+    //TODO: Solo los usuarios con rol 'Administrador' puede acceder a los métodos de este controlador.
+    //TODO: [Authorize(Roles = "Administrador, Usuario")] permite a los roles Administrador, Usuario acceder  a los métodos de este controlador.
+    //TODO:  También se puede restringir en 2 líneas asi:
+    //[Authorize(Roles = "Administrador")]
+    //[Authorize(Roles = "Usuario")]
+    //TODO: Restringir el acceso por rol se puede hacer a nivel de clase y también a nivel de método
+    [Authorize(Roles = "Administrador")]
     public class AdministracionController : Controller
     {
         private readonly RoleManager<IdentityRole> _gestionRoles;

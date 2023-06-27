@@ -73,8 +73,13 @@ namespace WebApp
             //TODO: Si por defecto se redirige al controlador 'Account' (que trae predeterminadamente Identity)
             //y no a 'Cuentas', entonces es necesario utilizar la siguiente línea de código.
             //Adicional a esto, si el usuario no está logueado, entonces lo redirige a la página de Login para que
-            //inicie sesión.
-            services.ConfigureApplicationCookie(options=> options.LoginPath ="/Cuentas/Login");
+            //inicie sesión '/Cuentas/Login'.
+            //Cuando el usuario no tiene permiso sobre algun recurso (Controlador o método del controlador), entonces 
+            //lo redirigea '/Cuentas/AccesoDenegado'
+            services.ConfigureApplicationCookie(options => {
+                options.LoginPath = "/Cuentas/Login";
+                options.AccessDeniedPath = "/Cuentas/AccesoDenegado";
+            });
 
             //TODO:Se configuran las restricciones para el campo password
             services.Configure<IdentityOptions>(opciones => {

@@ -122,5 +122,13 @@ namespace WebApp.Controllers
                 return Json($"El email {email} no esta disponible.");
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("Cuentas/AccesoDenegado")]
+        public IActionResult AccesoDenegado()
+        {
+            return View();
+        }
     }
 }

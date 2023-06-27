@@ -60,6 +60,15 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Create">Crear</a>
                     </li>
+                    @*TODO: Se visualiza la opcion de menú solo si el usuario está logueado y además pertenece al rol 'Administrador'*@
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrador"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Administracion" asp-action="ListaRoles">
+                                Gestionar Roles
+                            </a>
+                        </li>
+                    }
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
