@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using WebApp.ViewModels;
 
 namespace WebApp.Models
@@ -33,6 +34,12 @@ namespace WebApp.Models
             */
 
             base.OnModelCreating(modelBuilder);
+
+            //TODO:Recorre todas las llaves foráneas que existen y deshabilita el borrado en cascada y lo pone como Restrict.
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(x => x.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
 
     }
