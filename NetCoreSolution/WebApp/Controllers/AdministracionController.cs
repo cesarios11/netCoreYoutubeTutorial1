@@ -22,7 +22,7 @@ namespace WebApp.Controllers
     //[Authorize(Roles = "Administrador")]
     //[Authorize(Roles = "Usuario")]
     //TODO: Restringir el acceso por rol se puede hacer a nivel de clase y también a nivel de método
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Super Administrador, Administrador")]
     public class AdministracionController : Controller
     {
         private readonly RoleManager<IdentityRole> _gestionRoles;
@@ -110,6 +110,10 @@ namespace WebApp.Controllers
         //[dbo].[AspNetRoles]
         [HttpPost]
         [Route("Administracion/EditarRol")]
+        [Authorize(Policy = "EditarRolPolicy")]
+        //TODO:Se aplica la política 'EditarRolPolicy' establecida en el startup.cs
+        //El usuario que quiera utilizar este método tiene que tener asignado
+        //el claim 'Editar Rol' para poder utilizar el método.
         public async Task<IActionResult> EditarRol(EditarRolViewModel model)
         {
             var rol = await this._gestionRoles.FindByIdAsync(model.Id);
@@ -317,6 +321,10 @@ namespace WebApp.Controllers
         //[dbo].[AspNetRoles]
         [HttpPost]
         [Route("Administracion/BorrarRol")]
+        //TODO:Se aplica la política 'BorrarRolPolicy' establecida en el startup.cs
+        //El usuario que quiera utilizar este método tiene que tener asignado
+        //el claim 'Borrar Rol' para poder utilizar el método.
+        [Authorize(Policy = "BorrarRolPolicy")]
         public async Task<IActionResult> BorrarRol(string id)
         {
             var rol = await this._gestionRoles.FindByIdAsync(id);

@@ -75,7 +75,7 @@ namespace WebApp
             //Adicional a esto, si el usuario no está logueado, entonces lo redirige a la página de Login para que
             //inicie sesión '/Cuentas/Login'.
             //Cuando el usuario no tiene permiso sobre algun recurso (Controlador o método del controlador), entonces 
-            //lo redirigea '/Cuentas/AccesoDenegado'
+            //lo redirige a '/Cuentas/AccesoDenegado'
             services.ConfigureApplicationCookie(options => {
                 options.LoginPath = "/Cuentas/Login";
                 options.AccessDeniedPath = "/Cuentas/AccesoDenegado";
@@ -86,7 +86,19 @@ namespace WebApp
                 opciones.Password.RequiredLength = 8;
                 opciones.Password.RequiredUniqueChars = 3;
                 opciones.Password.RequireNonAlphanumeric = false;
+            });
 
+            //TODO:Se inyecta una autorizacion.
+            //Se añade la política que tiene 2 parámetros (el nombre de la política y la política en sí misma)
+            //La política dice que se requiera el claim 'Borrar Rol'. El claim 'Borrar Rol' tiene
+            //que existir para poder aplicar esa política
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("BorrarRolPolicy", policy => policy.RequireClaim("Borrar Rol"));
+                //TODO:Se puede establecer a la política que tenga varios claims así: 
+                //options.AddPolicy("BorrarRolPolicy", policy => policy.RequireClaim("Borrar Rol").RequireClaim("Editar Rol"));
+                options.AddPolicy("EditarRolPolicy", policy => policy.RequireClaim("Editar Rol"));
+                options.AddPolicy("CrearRolPolicy", policy => policy.RequireClaim("Crear Rol"));
             });
 
         }

@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<IdentityRole>
+@*TODO: 
+    Se inyecta el siguiente código para permitir la autorizacion. Permite validar si un usuario tiene un claim
+*@
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
 
 @{
     ViewBag.Title = "Listado de Roles";
@@ -23,21 +28,34 @@
             </div>
             <div class="card-footer">
                 <form asp-controller="Administracion" asp-action="BorrarRol" method="post" asp-route-id="@role.Id">
-                    <a asp-controller="Administracion" asp-action="EditarRol" asp-route-id="@role.Id" class="btn btn-primary">Editar</a>
+                    @*TODO: 
+                        Si el usuario cumple con la política 'EditarRolPolicy' (Que contenga el claim 'Editar Rol')
+                        Se recomienda también implementar esta política del lado del servidor '[Authorize(Policy = "EditarRolPolicy")]'
+                    *@
+                    @if ((await authorizationService.AuthorizeAsync(User, "EditarRolPolicy")).Succeeded)
+                    {
+                        <a asp-controller="Administracion" asp-action="EditarRol" asp-route-id="@role.Id" class="btn btn-primary">Editar</a>
+                    }                    
                     @*TODO: Se solicita confirmación de borrado (utilizando javascript)*@
                     @*<button type="submit" class="btn btn-danger" onclick="return confirm('Seguro que quiere borrar el rol: @role.Id ?')">
                         Borrar
                         </button>*@
-
-                    @*TODO: Se solicita confirmación de borrado de otra manera (más parecido a los estilos de la aplicación)*@
-                    <span id="confirmBorrarSpan_@role.Id" style="display:none">
-                        <span>Seguro que quiere borrar?</span>
-                        <button type="submit" class="btn btn-danger">Si</button>
-                        <a href="#" class="btn btn-primary" onclick="confirmBorrar('@role.Id', false)">No</a>
-                    </span>
-                    <span id="BorrarSpan_@role.Id">
-                        <a href="#" class="btn btn-danger" onclick="confirmBorrar('@role.Id', true)">Borrar</a>
-                    </span>
+                    @*TODO:
+                        Si el usuario cumple con la política 'BorrarRolPolicy' (Que contenga el claim 'Borrar Rol')
+                        Se recomienda también implementar esta política del lado del servidor '[Authorize(Policy = "BorrarRolPolicy")]'
+                    *@
+                    @if ((await authorizationService.AuthorizeAsync(User, "BorrarRolPolicy")).Succeeded)
+                    {                    
+                        @*TODO: Se solicita confirmación de borrado de otra manera (más parecido a los estilos de la aplicación)*@
+                        <span id="confirmBorrarSpan_@role.Id" style="display:none">
+                            <span>Seguro que quiere borrar?</span>
+                            <button type="submit" class="btn btn-danger">Si</button>
+                            <a href="#" class="btn btn-primary" onclick="confirmBorrar('@role.Id', false)">No</a>
+                        </span>
+                        <span id="BorrarSpan_@role.Id">
+                            <a href="#" class="btn btn-danger" onclick="confirmBorrar('@role.Id', true)">Borrar</a>
+                        </span>
+                    }
                 </form>
             </div>
         </div>
