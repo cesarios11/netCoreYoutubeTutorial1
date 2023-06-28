@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -27,10 +28,13 @@ namespace WebApp.Controllers
         //UserManager:Permite administrar y gestionar usuario;
         private readonly UserManager<UsuarioAplicacion> _gestionUsuarios;
 
-        public AdministracionController(RoleManager<IdentityRole>  gestionRoles, UserManager<UsuarioAplicacion> gestionUsuarios)
+        private readonly ILogger<AdministracionController> _logger;
+
+        public AdministracionController(RoleManager<IdentityRole>  gestionRoles, UserManager<UsuarioAplicacion> gestionUsuarios, ILogger<AdministracionController> logger)
         {
             this._gestionRoles = gestionRoles;
             this._gestionUsuarios = gestionUsuarios;
+            this._logger = logger;
         }
 
         //[dbo].[AspNetRoles]
@@ -321,18 +325,29 @@ namespace WebApp.Controllers
             }
             else
             {
-                var result = await this._gestionRoles.DeleteAsync(rol);
-                if (result.Succeeded)
+                try
                 {
-                    return RedirectToAction("ListaRoles");
-                }
+                    var result = await this._gestionRoles.DeleteAsync(rol);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ListaRoles");
+                    }
 
-                foreach (var error in result.Errors)
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+
+                    return View("ListaRoles");
+                }
+                catch (DbUpdateException ex)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    this._logger.LogError($"Se produjo un error al borrar el  rol: {ex}");
+                    ViewBag.ErrorTitle = $"El rol {rol.Name} esta siendo utilizado";
+                    ViewBag.ErrorMessage = $"El rol {rol.Name} no puede ser borrado porque contiene usuarios. Antes de borar el rol debe quitar los usuarios de dicho rol.";
+                    return View("ErrorGenerico");
                 }
-
-                return View("ListaRoles");
+               
             }
         }
 
