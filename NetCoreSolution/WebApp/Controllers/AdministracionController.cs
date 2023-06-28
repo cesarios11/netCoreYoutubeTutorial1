@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using WebApp.Models;
 using WebApp.ViewModels;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -30,7 +32,7 @@ namespace WebApp.Controllers
 
         private readonly ILogger<AdministracionController> _logger;
 
-        public AdministracionController(RoleManager<IdentityRole>  gestionRoles, UserManager<UsuarioAplicacion> gestionUsuarios, ILogger<AdministracionController> logger)
+        public AdministracionController(RoleManager<IdentityRole> gestionRoles, UserManager<UsuarioAplicacion> gestionUsuarios, ILogger<AdministracionController> logger)
         {
             this._gestionRoles = gestionRoles;
             this._gestionUsuarios = gestionUsuarios;
@@ -39,7 +41,7 @@ namespace WebApp.Controllers
 
         //[dbo].[AspNetRoles]
         [HttpGet]
-        [Route("Administracion/CrearRol")]        
+        [Route("Administracion/CrearRol")]
         public IActionResult CrearRol()
         {
             return View();
@@ -52,7 +54,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityRole identityRole = new IdentityRole 
+                IdentityRole identityRole = new IdentityRole
                 {
                     Name = model.NombreRol
                 };
@@ -62,7 +64,7 @@ namespace WebApp.Controllers
                 {
                     return RedirectToAction("ListaRoles", "Administracion");
                 }
-                foreach (IdentityError error in result.Errors) 
+                foreach (IdentityError error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
@@ -149,7 +151,7 @@ namespace WebApp.Controllers
             var model = new List<UsuarioRolModel>();
             foreach (var user in this._gestionUsuarios.Users)
             {
-                var usuarioRolModel = new UsuarioRolModel 
+                var usuarioRolModel = new UsuarioRolModel
                 {
                     UsuarioId = user.Id,
                     UsuarioNombre = user.UserName
@@ -205,7 +207,7 @@ namespace WebApp.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("EditarRol", new { Id= roleId });
+                        return RedirectToAction("EditarRol", new { Id = roleId });
                     }
                 }
             }
@@ -238,13 +240,13 @@ namespace WebApp.Controllers
             var usuarioClaims = await this._gestionUsuarios.GetClaimsAsync(usuario);
             //TODO: Lista de los roles de usuario.
             var usuarioRoles = await this._gestionUsuarios.GetRolesAsync(usuario);
-            var model = new EditarUsuarioModel 
+            var model = new EditarUsuarioModel
             {
-                Id= usuario.Id,
+                Id = usuario.Id,
                 Email = usuario.Email,
                 NombreUsuario = usuario.UserName,
                 ayudaPass = usuario.ayudaPass,
-                Notificaciones = usuarioClaims.Select(x=>x.Value).ToList(),
+                Notificaciones = usuarioClaims.Select(x => x.Value).ToList(),
                 Roles = usuarioRoles
             };
 
@@ -347,7 +349,7 @@ namespace WebApp.Controllers
                     ViewBag.ErrorMessage = $"El rol {rol.Name} no puede ser borrado porque contiene usuarios. Antes de borar el rol debe quitar los usuarios de dicho rol.";
                     return View("ErrorGenerico");
                 }
-               
+
             }
         }
 
@@ -367,7 +369,7 @@ namespace WebApp.Controllers
 
             foreach (var rol in this._gestionRoles.Roles)
             {
-                var rolUsuarioModel = new RolUsuarioModel                 
+                var rolUsuarioModel = new RolUsuarioModel
                 {
                     RolId = rol.Id,
                     RolNombre = rol.Name
@@ -391,7 +393,7 @@ namespace WebApp.Controllers
         [Route("Administracion/GestionarRolesUsuario")]
         public async Task<IActionResult> GestionarRolesUsuario(List<RolUsuarioModel> model, string idUsuario)
         {
-            var usuario = await this._gestionUsuarios.FindByIdAsync (idUsuario);            
+            var usuario = await this._gestionUsuarios.FindByIdAsync(idUsuario);
             if (usuario == null)
             {
                 ViewBag.ErrorMessage = $"Usuario con id {usuario} no fue encontrado";
@@ -407,7 +409,7 @@ namespace WebApp.Controllers
                 return View(model);
             }
 
-            result = await this._gestionUsuarios.AddToRolesAsync(usuario, model.Where(x=>x.EstaSeleccionado).Select(y=>y.RolNombre));
+            result = await this._gestionUsuarios.AddToRolesAsync(usuario, model.Where(x => x.EstaSeleccionado).Select(y => y.RolNombre));
 
             if (!result.Succeeded)
             {
@@ -415,7 +417,79 @@ namespace WebApp.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("EditarUsuario", new { id = idUsuario});
+            return RedirectToAction("EditarUsuario", new { id = idUsuario });
+        }
+
+        //[dbo].[AspNetUserClaims] 
+        [HttpGet]
+        [Route("Administracion/GestionarClaimsUsuario")]
+        public async Task<IActionResult> GestionarClaimsUsuario(string idUsuario)
+        {
+            var usuario = await this._gestionUsuarios.FindByIdAsync(idUsuario);
+            if (usuario == null)
+            {
+                ViewBag.ErrorMessage = $"Usuario con id {usuario} no fue encontrado";
+                return View("Error");
+            }
+
+            //TODO: Se obtienen todos los claims del usuario
+            var existingUserClaims = await this._gestionUsuarios.GetClaimsAsync(usuario);
+            var modelo = new UsuarioClaimsViewModel 
+            {
+                idUsuario = usuario.Id
+            };
+
+            //TODO: Se recorren los claims de la aplicación.
+            foreach (Claim claim in AlmacenClaims.todosLosClaims)
+            {
+                UsuarioClaim usuarioClaim = new UsuarioClaim
+                {
+                    tipoClaim = claim.Type
+                };
+
+                //TODO: Si el usuario tiene el claim que se está recorriendo, entonces se selecciona.
+                if (existingUserClaims.Any(x => x.Type == claim.Type))
+                {
+                    usuarioClaim.estaSeleccionado = true;
+                }
+
+                modelo.Claims.Add(usuarioClaim);
+            }
+
+            return View(modelo);
+        }
+
+        //[dbo].[AspNetUserClaims] 
+        [HttpPost]
+        [Route("Administracion/GestionarClaimsUsuario")]
+        public async Task<IActionResult> GestionarClaimsUsuario(UsuarioClaimsViewModel model)
+        {
+            var usuario = await this._gestionUsuarios.FindByIdAsync(model.idUsuario);
+            if (usuario == null)
+            {
+                ViewBag.ErrorMessage = $"Usuario con id {model.idUsuario} no fue encontrado";
+                return View("Error");
+            }
+
+            //TODO:Consulta los claims del usuario y se eliminan
+            var claims = await this._gestionUsuarios.GetClaimsAsync(usuario);
+            var result = await this._gestionUsuarios.RemoveClaimsAsync(usuario, claims);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "No se pudo borrar los claims del usuario");
+                return View(model);
+            }
+
+            //TODO: Se asocian los nuevos claims
+            result = await this._gestionUsuarios.AddClaimsAsync(usuario, model.Claims.Where(x => x.estaSeleccionado).Select(y => new Claim(y.tipoClaim, y.tipoClaim)));
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "No se pudo agregar claims al usuario");
+                return View(model);
+            }
+
+            return RedirectToAction("EditarUsuario", new { id = model.idUsuario});
         }
     }
 }
