@@ -208,6 +208,7 @@ namespace WebApp.Controllers
             return RedirectToAction("EditarRol", new { Id = roleId });
         }
 
+        //[dbo].[AspNetUsers]
         [HttpGet]
         [Route("Administracion/ListaUsuarios")]
         public IActionResult ListaUsuarios()
@@ -216,6 +217,7 @@ namespace WebApp.Controllers
             return View(usuarios);
         }
 
+        //[dbo].[AspNetUsers]
         [HttpGet]
         [Route("Administracion/EditarUsuario")]
         public async Task<IActionResult> EditarUsuario(string id)
@@ -245,6 +247,7 @@ namespace WebApp.Controllers
             return View(model);
         }
 
+        //[dbo].[AspNetUsers]
         [HttpPost]
         [Route("Administracion/EditarUsuario")]
         public async Task<IActionResult> EditarUsuario(EditarUsuarioModel model)
@@ -277,6 +280,7 @@ namespace WebApp.Controllers
 
         }
 
+        //[dbo].[AspNetUsers]
         [HttpPost]
         [Route("Administracion/BorrarUsuario")]
         public async Task<IActionResult> BorrarUsuario(string id)
@@ -301,6 +305,34 @@ namespace WebApp.Controllers
                 }
 
                 return View("ListaUsuarios");
+            }
+        }
+
+        //[dbo].[AspNetRoles]
+        [HttpPost]
+        [Route("Administracion/BorrarRol")]
+        public async Task<IActionResult> BorrarRol(string id)
+        {
+            var rol = await this._gestionRoles.FindByIdAsync(id);
+            if (rol == null)
+            {
+                ViewBag.ErrorMessage = $"Rol con id {id} no fue encontrado";
+                return View("Error");
+            }
+            else
+            {
+                var result = await this._gestionRoles.DeleteAsync(rol);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListaRoles");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View("ListaRoles");
             }
         }
 
