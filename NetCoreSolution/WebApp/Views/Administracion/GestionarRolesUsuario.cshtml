@@ -1,0 +1,33 @@
+﻿@model List<RolUsuarioModel>
+@{
+    var idUsuario = ViewBag.IdUsuario;
+}
+
+<form asp-controller="Administracion" asp-action="GestionarRolesUsuario" method="post" enctype="multipart/form-data">
+    <input hidden asp-for="@idUsuario" />
+    <div class="card">
+        <div class="card-header">
+            <h2>Gestionar roles usuario</h2>
+        </div>
+        <div class="card-body">
+            @for(int i = 0; i<Model.Count; i++ )
+            {
+                <div class="form-check m-1">
+                    <input type="hidden" asp-for="@Model[i].RolId"/>
+                    <input type="hidden" asp-for="@Model[i].RolNombre" />
+                    <input asp-for="@Model[i].EstaSeleccionado" class="form-check-input" />
+                    <label asp-for="@Model[i].EstaSeleccionado" class="form-check-label">
+                        @Model[i].RolNombre
+                    </label>
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Actualizar" class="btn btn-primary" style="width:auto;" />
+            <a asp-controller="Administracion" asp-action="EditarUsuario" asp-route-id="@idUsuario">
+                Cancelar
+            </a>
+        </div>
+    </div>
+</form>

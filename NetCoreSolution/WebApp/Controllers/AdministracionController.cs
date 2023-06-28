@@ -351,5 +351,71 @@ namespace WebApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Administracion/GestionarRolesUsuario")]
+        public async Task<IActionResult> GestionarRolesUsuario(string idUsuario)
+        {
+            ViewBag.IdUsuario = idUsuario;
+            var user = await this._gestionUsuarios.FindByIdAsync(idUsuario);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Usuario con id {idUsuario} no fue encontrado";
+                return View("Error");
+            }
+
+            var model = new List<RolUsuarioModel>();
+
+            foreach (var rol in this._gestionRoles.Roles)
+            {
+                var rolUsuarioModel = new RolUsuarioModel                 
+                {
+                    RolId = rol.Id,
+                    RolNombre = rol.Name
+                };
+
+                if (await this._gestionUsuarios.IsInRoleAsync(user, rol.Name))
+                {
+                    rolUsuarioModel.EstaSeleccionado = true;
+                }
+                else
+                {
+                    rolUsuarioModel.EstaSeleccionado = false;
+                }
+                model.Add(rolUsuarioModel);
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Administracion/GestionarRolesUsuario")]
+        public async Task<IActionResult> GestionarRolesUsuario(List<RolUsuarioModel> model, string idUsuario)
+        {
+            var usuario = await this._gestionUsuarios.FindByIdAsync (idUsuario);            
+            if (usuario == null)
+            {
+                ViewBag.ErrorMessage = $"Usuario con id {usuario} no fue encontrado";
+                return View("Error");
+            }
+
+            var roles = await this._gestionUsuarios.GetRolesAsync(usuario);
+            var result = await this._gestionUsuarios.RemoveFromRolesAsync(usuario, roles);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "No se pudo borrar usuario con roles");
+                return View(model);
+            }
+
+            result = await this._gestionUsuarios.AddToRolesAsync(usuario, model.Where(x=>x.EstaSeleccionado).Select(y=>y.RolNombre));
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "No se pudo añadir roles al usuario");
+                return View(model);
+            }
+
+            return RedirectToAction("EditarUsuario", new { id = idUsuario});
+        }
     }
 }
