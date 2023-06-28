@@ -54,9 +54,13 @@ namespace WebApp.Controllers
                 //Guardamos datos de usuario en la tabla 'AspNetUsers' de base de datos .
                 var resultado = await this._gestionUsuarios.CreateAsync(usuario, model.Password);
 
-                //Si el usuario se creó correctamente se redirige a la página de inicio.
+                //Si el usuario se creó correctamente se redirige a la página de inicio, salvo que sea administrador
                 if (resultado.Succeeded)
                 {
+                    if (this._gestionLogin.IsSignedIn(User) && User.IsInRole("Administrador"))
+                    {
+                        return RedirectToAction("ListaUsuarios", "Administracion");
+                    }
                     await this._gestionLogin.SignInAsync(usuario, isPersistent:false);
                     return RedirectToAction("Index4", "Home");
                 }

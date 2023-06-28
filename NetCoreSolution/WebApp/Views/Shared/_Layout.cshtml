@@ -63,10 +63,19 @@
                     @*TODO: Se visualiza la opcion de menú solo si el usuario está logueado y además pertenece al rol 'Administrador'*@
                     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrador"))
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Administracion" asp-action="ListaRoles">
-                                Gestionar Roles
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" 
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Gestion
                             </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" asp-controller="Administracion" asp-action="ListaUsuarios">
+                                    Usuarios
+                                </a>
+                                <a class="dropdown-item" asp-controller="Administracion" asp-action="ListaRoles">
+                                    Roles
+                                </a>
+                            </div>
                         </li>
                     }
                 </ul>

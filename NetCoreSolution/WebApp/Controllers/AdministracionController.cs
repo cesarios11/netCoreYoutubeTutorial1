@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebApp.ViewModels;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebApp.Controllers
 {
@@ -203,5 +207,102 @@ namespace WebApp.Controllers
             }
             return RedirectToAction("EditarRol", new { Id = roleId });
         }
+
+        [HttpGet]
+        [Route("Administracion/ListaUsuarios")]
+        public IActionResult ListaUsuarios()
+        {
+            var usuarios = this._gestionUsuarios.Users;
+            return View(usuarios);
+        }
+
+        [HttpGet]
+        [Route("Administracion/EditarUsuario")]
+        public async Task<IActionResult> EditarUsuario(string id)
+        {
+            var usuario = await this._gestionUsuarios.FindByIdAsync(id);
+            if (usuario == null)
+            {
+                ViewBag.ErrorMessage = $"Usuario con id {id} no fue encontrado";
+                return View("Error");
+            }
+            //TODO:Lista de las notificaciones
+            //TODO: Claims nos permite la autenticación basada en notificaciones.
+            //Donde la identidad del usuario se representa como un conjunto de notificaciones
+            var usuarioClaims = await this._gestionUsuarios.GetClaimsAsync(usuario);
+            //TODO: Lista de los roles de usuario.
+            var usuarioRoles = await this._gestionUsuarios.GetRolesAsync(usuario);
+            var model = new EditarUsuarioModel 
+            {
+                Id= usuario.Id,
+                Email = usuario.Email,
+                NombreUsuario = usuario.UserName,
+                ayudaPass = usuario.ayudaPass,
+                Notificaciones = usuarioClaims.Select(x=>x.Value).ToList(),
+                Roles = usuarioRoles
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("Administracion/EditarUsuario")]
+        public async Task<IActionResult> EditarUsuario(EditarUsuarioModel model)
+        {
+            var usuario = await this._gestionUsuarios.FindByIdAsync(model.Id);
+            if (usuario == null)
+            {
+                ViewBag.ErrorMessage = $"Usuario con id {model.Id} no fue encontrado";
+                return View("Error");
+            }
+            else
+            {
+                usuario.Email = model.Email;
+                usuario.UserName = model.NombreUsuario;
+                usuario.ayudaPass = model.ayudaPass;
+
+                var resultado = await this._gestionUsuarios.UpdateAsync(usuario);
+                if (resultado.Succeeded)
+                {
+                    return RedirectToAction("ListaUsuarios");
+                }
+
+                foreach (var error in resultado.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View(model);
+            }
+
+        }
+
+        [HttpPost]
+        [Route("Administracion/BorrarUsuario")]
+        public async Task<IActionResult> BorrarUsuario(string id)
+        {
+            var user = await this._gestionUsuarios.FindByIdAsync(id);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Usuario con id {id} no fue encontrado";
+                return View("Error");
+            }
+            else
+            {
+                var resultado = await this._gestionUsuarios.DeleteAsync(user);
+                if (resultado.Succeeded)
+                {
+                    return RedirectToAction("ListaUsuarios");
+                }
+
+                foreach (var error in resultado.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View("ListaUsuarios");
+            }
+        }
+
     }
 }
