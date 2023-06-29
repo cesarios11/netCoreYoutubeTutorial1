@@ -94,11 +94,36 @@ namespace WebApp
             //que existir para poder aplicar esa política
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("BorrarRolPolicy", policy => policy.RequireClaim("Borrar Rol"));
+                //options.AddPolicy("BorrarRolPolicy", policy => policy.RequireClaim("Borrar Rol"));
                 //TODO:Se puede establecer a la política que tenga varios claims así: 
                 //options.AddPolicy("BorrarRolPolicy", policy => policy.RequireClaim("Borrar Rol").RequireClaim("Editar Rol"));
-                options.AddPolicy("EditarRolPolicy", policy => policy.RequireClaim("Editar Rol"));
-                options.AddPolicy("CrearRolPolicy", policy => policy.RequireClaim("Crear Rol"));
+                //TODO: Para editar rol, el usuario debe estar asignado a esta política, tener el claim para editar en true y pertenecer al rol 'Super Administrador' y 'Administrador'
+                //options.AddPolicy("EditarRolPolicy", policy => policy.RequireClaim("Editar Rol", "true").RequireRole("Super Administrador").RequireRole("Administrador"));
+
+                //TODO: El método 'RequireAssertion' nos permite pasarle el conjuto de condiciones como parámetros.
+                //El usuario debe pertenecer al rol 'Administrador' o 'Super Administrador' y tener el claim 'Editar Rol' en true.
+                options.AddPolicy("EditarRolPolicy", policy => policy.RequireAssertion(context => 
+                    context.User.IsInRole("Administrador") ||
+                    context.User.IsInRole("Super Administrador") &&
+                    context.User.HasClaim(claim=>claim.Type == "Editar Rol" && claim.Value == "true")
+                ));
+                //TODO: El usuario debe pertenecer al rol 'Administrador' o 'Super Administrador' o 'Usuario' y tener el claim 'Leer Rol' en true.
+                options.AddPolicy("LeerRolPolicy", policy => policy.RequireAssertion(context =>
+                    context.User.IsInRole("Super Administrador") ||
+                    context.User.IsInRole("Administrador") ||
+                    context.User.IsInRole("Usuario") &&
+                    context.User.HasClaim(claim => claim.Type == "Leer Rol" && claim.Value == "true") 
+                ));
+                //TODO: El usuario debe pertenecer al rol 'Super Administrador' y tener el claim 'Borrar Rol' en true.
+                options.AddPolicy("BorrarRolPolicy", policy => policy.RequireAssertion(context =>
+                    context.User.IsInRole("Super Administrador") &&
+                    context.User.HasClaim(claim => claim.Type == "Borrar Rol" && claim.Value == "true")
+                ));
+                //TODO: El usuario debe pertenecer al rol 'Super Administrador' y tener el claim 'Crear Rol' en true.
+                options.AddPolicy("CrearRolPolicy", policy => policy.RequireAssertion(context =>
+                    context.User.IsInRole("Super Administrador") &&
+                    context.User.HasClaim(claim => claim.Type == "Crear Rol" && claim.Value == "true")
+                ));
             });
 
         }

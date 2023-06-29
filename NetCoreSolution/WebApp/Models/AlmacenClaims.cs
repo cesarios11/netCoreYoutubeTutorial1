@@ -15,6 +15,7 @@ namespace WebApp.Models
         public static List<Claim> todosLosClaims = new List<Claim>()
         {
             //TODO:Tanto el tipo como el valor es el mismo en este caso.
+            new Claim("Leer Rol", "Leer Rol"),
             new Claim("Crear Rol", "Crear Rol"),
             new Claim("Editar Rol", "Editar Rol"),
             new Claim("Borrar Rol", "Borrar Rol")

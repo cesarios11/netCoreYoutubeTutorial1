@@ -22,7 +22,7 @@ namespace WebApp.Controllers
     //[Authorize(Roles = "Administrador")]
     //[Authorize(Roles = "Usuario")]
     //TODO: Restringir el acceso por rol se puede hacer a nivel de clase y también a nivel de método
-    [Authorize(Roles = "Super Administrador, Administrador")]
+    [Authorize(Roles = "Super Administrador, Administrador, Usuario")]
     public class AdministracionController : Controller
     {
         private readonly RoleManager<IdentityRole> _gestionRoles;
@@ -41,6 +41,10 @@ namespace WebApp.Controllers
 
         //[dbo].[AspNetRoles]
         [HttpGet]
+        //TODO:Se aplica la política 'CrearRolPolicy' establecida en el startup.cs
+        //El usuario que quiera utilizar este método tiene que tener asignado
+        //el claim 'Crear Rol' para poder utilizar el método.
+        [Authorize(Policy = "CrearRolPolicy")]
         [Route("Administracion/CrearRol")]
         public IActionResult CrearRol()
         {
@@ -49,6 +53,10 @@ namespace WebApp.Controllers
 
         //[dbo].[AspNetRoles]
         [HttpPost]
+        //TODO:Se aplica la política 'CrearRolPolicy' establecida en el startup.cs
+        //El usuario que quiera utilizar este método tiene que tener asignado
+        //el claim 'Crear Rol' para poder utilizar el método.
+        [Authorize(Policy = "CrearRolPolicy")]
         [Route("Administracion/CrearRol")]
         public async Task<IActionResult> CrearRol(CrearRolViewModel model)
         {
@@ -75,6 +83,10 @@ namespace WebApp.Controllers
         //[dbo].[AspNetRoles]
         [HttpGet]
         [Route("Administracion/Roles")]
+        //TODO:Se aplica la política 'LeerRolPolicy' establecida en el startup.cs
+        //El usuario que quiera utilizar este método tiene que tener asignado
+        //el claim 'Leer Rol' para poder utilizar el método.
+        [Authorize(Policy = "LeerRolPolicy")]
         public IActionResult ListaRoles()
         {
             var roles = _gestionRoles.Roles;
@@ -84,6 +96,10 @@ namespace WebApp.Controllers
         //[dbo].[AspNetRoles]
         [HttpGet]
         [Route("Administracion/EditarRol")]
+        //TODO:Se aplica la política 'EditarRolPolicy' establecida en el startup.cs
+        //El usuario que quiera utilizar este método tiene que tener asignado
+        //el claim 'Editar Rol' para poder utilizar el método.
+        [Authorize(Policy = "EditarRolPolicy")]
         public async Task<IActionResult> EditarRol(string id)
         {
             var rol = await _gestionRoles.FindByIdAsync(id);
@@ -110,10 +126,10 @@ namespace WebApp.Controllers
         //[dbo].[AspNetRoles]
         [HttpPost]
         [Route("Administracion/EditarRol")]
-        [Authorize(Policy = "EditarRolPolicy")]
         //TODO:Se aplica la política 'EditarRolPolicy' establecida en el startup.cs
         //El usuario que quiera utilizar este método tiene que tener asignado
         //el claim 'Editar Rol' para poder utilizar el método.
+        [Authorize(Policy = "EditarRolPolicy")]       
         public async Task<IActionResult> EditarRol(EditarRolViewModel model)
         {
             var rol = await this._gestionRoles.FindByIdAsync(model.Id);
@@ -250,7 +266,7 @@ namespace WebApp.Controllers
                 Email = usuario.Email,
                 NombreUsuario = usuario.UserName,
                 ayudaPass = usuario.ayudaPass,
-                Notificaciones = usuarioClaims.Select(x => x.Value).ToList(),
+                Notificaciones = usuarioClaims.Select(x => (x.Type + ":" + x.Value)).ToList(),
                 Roles = usuarioRoles
             };
 
@@ -456,7 +472,7 @@ namespace WebApp.Controllers
                 };
 
                 //TODO: Si el usuario tiene el claim que se está recorriendo, entonces se selecciona.
-                if (existingUserClaims.Any(x => x.Type == claim.Type))
+                if (existingUserClaims.Any(x => x.Type == claim.Type && x.Value == "true"))
                 {
                     usuarioClaim.estaSeleccionado = true;
                 }
@@ -490,7 +506,7 @@ namespace WebApp.Controllers
             }
 
             //TODO: Se asocian los nuevos claims
-            result = await this._gestionUsuarios.AddClaimsAsync(usuario, model.Claims.Where(x => x.estaSeleccionado).Select(y => new Claim(y.tipoClaim, y.tipoClaim)));
+            result = await this._gestionUsuarios.AddClaimsAsync(usuario, model.Claims.Where(x => x.estaSeleccionado).Select(y => new Claim(y.tipoClaim, y.estaSeleccionado? "true":"false")));
             if (!result.Succeeded)
             {
                 ModelState.AddModelError(string.Empty, "No se pudo agregar claims al usuario");
